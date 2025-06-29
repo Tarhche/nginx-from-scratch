@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1rem 0;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        
+        .image-preview {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 2px solid #ddd;
+        }
+        
+        .file-info {
+            flex: 1;
+            margin: 0 1rem;
+            text-align: left;
+        }
+        
+        .file-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        
+        .file-path {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .file-list a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        
+        .file-list a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Available Files</h1>
+        <ul class="file-list">
+            <li class="file-item">
+                <img src="free-as-a-bird/megha-ajith-WRST5Pops3E-unsplash.jpg" alt="Free as a bird" class="image-preview">
+                <div class="file-info">
+                    <div class="file-name">Free as a Bird</div>
+                    <div class="file-path">free-as-a-bird/megha-ajith-WRST5Pops3E-unsplash.jpg</div>
+                </div>
+                <a href="free-as-a-bird/megha-ajith-WRST5Pops3E-unsplash.jpg">View Full Size</a>
+            </li>
+            <li class="file-item">
+                <img src="in-the-blue-sky-01/ben-klewais-nLE3eLaQA6A-unsplash.jpg" alt="In the blue sky 01" class="image-preview">
+                <div class="file-info">
+                    <div class="file-name">In the Blue Sky 01</div>
+                    <div class="file-path">in-the-blue-sky-01/ben-klewais-nLE3eLaQA6A-unsplash.jpg</div>
+                </div>
+                <a href="in-the-blue-sky-01/ben-klewais-nLE3eLaQA6A-unsplash.jpg">View Full Size</a>
+            </li>
+            <li class="file-item">
+                <img src="in-the-blue-sky-02/jake-nackos-zAeD6Gug2PY-unsplash.jpg" alt="In the blue sky 02" class="image-preview">
+                <div class="file-info">
+                    <div class="file-name">In the Blue Sky 02</div>
+                    <div class="file-path">in-the-blue-sky-02/jake-nackos-zAeD6Gug2PY-unsplash.jpg</div>
+                </div>
+                <a href="in-the-blue-sky-02/jake-nackos-zAeD6Gug2PY-unsplash.jpg">View Full Size</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
