@@ -1,5 +1,5 @@
-BUILD_NAME=serving-static-content
-CONTAINER_NAME=serving-static-content
+BUILD_NAME=load-balancing
+CONTAINER_NAME=load-balancing
 
 default: run
 
@@ -7,7 +7,7 @@ build:
 	docker build -t ${BUILD_NAME} -f Dockerfile .
 
 up start: build
-	docker run --detach --rm --name=${CONTAINER_NAME} --publish 8002-8010:8002-8010 ${BUILD_NAME}
+	docker run --detach --rm --name=${CONTAINER_NAME} --publish 8015-8020:8015-8020 ${BUILD_NAME}
 
 down stop:
 	docker stop ${CONTAINER_NAME}
