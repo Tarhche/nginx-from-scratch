@@ -7,7 +7,7 @@ build:
 	docker build -t ${BUILD_NAME} -f Dockerfile .
 
 up start: build
-	docker run --detach --rm --name=${CONTAINER_NAME} --publish 8015-8020:8015-8020 ${BUILD_NAME}
+	docker run --detach --rm --name=${CONTAINER_NAME} --publish 8015:8015 --publish 8016:8016 ${BUILD_NAME}
 
 down stop:
 	docker stop ${CONTAINER_NAME}
