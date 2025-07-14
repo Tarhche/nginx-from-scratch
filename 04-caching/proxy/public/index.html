@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .code {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-container {
+            display: flex;
+            align-items: center;
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Form</h1>
+        <form id="numberForm">
+            <div class="form-group">
+                <label for="numberA">Number A:</label>
+                <input type="number" id="numberA" name="a" required placeholder="Enter first number">
+            </div>
+            <div class="form-group">
+                <label for="numberB">Number B:</label>
+                <input type="number" id="numberB" name="b" required placeholder="Enter second number">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <div id="result" class="result" style="display: none;">
+            <h3>Generated URL:</h3>
+            <div class="code" id="urlOutput"></div>
+        </div>
+        
+        <div id="response" class="result" style="display: none;">
+            <h3>Server Response:</h3>
+            <div class="code" id="responseOutput"></div>
+        </div>
+        
+        <div id="elapsed" class="result" style="display: none;">
+            <h3>Request Time:</h3>
+            <div class="code" id="elapsedOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        const stripTrailingSlash = (str) => {
+            return str.endsWith('/') ?
+                str.slice(0, -1) :
+                str;
+        };
+
+        document.getElementById('numberForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const numberA = parseInt(document.getElementById('numberA').value);
+            const numberB = parseInt(document.getElementById('numberB').value);
+            
+            // Create JSON payload
+            const payload = {
+                a: numberA,
+                b: numberB
+            };
+            
+            // Convert to base64
+            const jsonString = JSON.stringify(payload);
+            const base64Payload = btoa(jsonString);
+            
+            // Create URL with payload as query parameter
+            const apiURL = stripTrailingSlash(window.location.href.split('?')[0]) + '/api'; // Remove existing query params
+            const finalUrl = `${apiURL}?payload=${encodeURIComponent(base64Payload)}`;
+
+            // Display the generated URL
+            document.getElementById('urlOutput').textContent = finalUrl;
+            document.getElementById('result').style.display = 'block';
+            
+            // Show loading state
+            document.getElementById('responseOutput').innerHTML = '<div class="loading-container"><div class="loading"></div>Loading response from server...</div>';
+            document.getElementById('response').style.display = 'block';
+            
+            // Hide elapsed time section initially
+            document.getElementById('elapsed').style.display = 'none';
+
+            try {
+                // Start timing
+                const startTime = performance.now();
+                
+                // Send the request to the server
+                const response = await fetch(finalUrl, {
+                    method: 'GET',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const responseData = await response.json();
+                
+                // Calculate elapsed time
+                const endTime = performance.now();
+                const elapsedTime = endTime - startTime;
+                
+                document.getElementById('responseOutput').textContent = JSON.stringify(responseData, null, 2);
+                document.getElementById('elapsedOutput').textContent = `${elapsedTime.toFixed(2)} milliseconds`;
+                document.getElementById('elapsed').style.display = 'block';
+            } catch (error) {
+                document.getElementById('responseOutput').textContent = `Error: ${error.message}`;
+                document.getElementById('elapsed').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
