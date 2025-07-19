@@ -1,7 +1,7 @@
-FROM nginx:stable
+FROM nginx:1.28-alpine
 
 # Install mysql-client
-RUN apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache mysql-client
 
 RUN cat << 'EOF' >> /etc/nginx/nginx.conf
 stream {

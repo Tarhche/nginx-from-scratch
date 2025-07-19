@@ -1,6 +1,7 @@
-FROM nginx:stable
+FROM nginx:1.28-alpine
 
-RUN apt update && apt install -y apache2-utils
+# Install apache2-utils (htpasswd) on Alpine
+RUN apk add --no-cache apache2-utils
 
 # use htpasswd to create file for authentication
 RUN htpasswd -cb /etc/nginx/.htpasswd admin pass123

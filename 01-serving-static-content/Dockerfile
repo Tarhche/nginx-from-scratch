@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:1.28-alpine
 
 COPY config /etc/nginx/conf.d
 

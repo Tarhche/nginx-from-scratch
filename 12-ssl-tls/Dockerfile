@@ -9,7 +9,7 @@ COPY generate-cert.sh .
 RUN chmod +x generate-cert.sh && ./generate-cert.sh
 
 # runtime stage - nginx
-FROM nginx:stable
+FROM nginx:1.28-alpine
 
 COPY --from=builder /ssl/private.key /etc/nginx/ssl/private.key
 COPY --from=builder /ssl/public.pem /etc/nginx/ssl/public.pem
